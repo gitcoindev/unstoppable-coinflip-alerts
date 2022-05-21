@@ -1,12 +1,14 @@
-# Whale Alerts Dapp 🐋🚨
+# Coinflip Alerts dAPP 🚨
 
 ## About
 
-Aim: Allow user to track wallet addresses, cross-chain (ETH/BSC/MATIC/…) and recieve alerts when specific transaction conditions are met.
+This dAPP is a demo on setting custom Telegram alerts for the largest the Polygon/MATIC Casino dAPP.
+Each user can sign using Unstoppable domains, set their own Telegram Bot API data, MATIC bet threshold.
 
-This initial tutorial video is a great introduction: [Link to Moralis YouTube Video](https://youtu.be/-M1GR45GykQ).
+A demo showcase is a Telegram Bot pushing notifications to a Telegram channel whenever any user sends more or equal to a defined numeber of MATIC tokens.
 
-Built on [create-react-app](https://reactjs.org/docs/create-a-new-react-app.html) a ReactJS front-end with a Moralis backend.
+Initial forked from: https://github.com/ashbeech/moralis-whale-alerts.git
+Built on [create-react-app](https://reactjs.org/docs/create-a-new-react-app.html) a ReactJS front-end with a Moralis backend and Unstoppable Domains integration.
 
 ## Quick Launch 🚀
 
@@ -53,51 +55,4 @@ Once installed and synced with your Moralis server instance, in the project dire
 npm start
 
 ```
-
-## Dependencies 🏗
-
-`moralis`: [Docs](https://docs.moralis.io/)
-
-`@chakra-ui/react`: [Docs](https://chakra-ui.com/docs/getting-started)
-
-`react-final-form`: [Docs](https://final-form.org/docs/final-form/getting-started)
-
-`react`, `react-dom` `react-moralis` should be installed automatically ([package.json](./package.json)).
-
-## Adapt Alert Conditons 🛠
-
-Cloud function `run` on `watchEthAddress` adds `address` to your list of addresses to track transactions on.
-
-```javascript
-//
-// sync all txs in realtime to WatchedEthAddress class
-Moralis.Cloud.run("watchEthAddress", {
-  address,
-  …
-});
-```
-
-Function `afterSave` on `EthTransactions` then is where you create conditons against those transactions to intiate alerts.
-
-```javascript
- Moralis.Cloud.afterSave("EthTransactions", async function (request) {
-    …
- }
-```
-
-## Todos ✅
-
-- [ ] Dispatch alerts via Telegram/Twitter/
-- [ ] Threshold conditions against tx e.g. only txs > $1,000,000.
-- [ ] Enable cross-chain compatibility.
-- [ ] Much more TBA.
-
-## Community BUIDLing 👨‍🔧👩‍🔧
-
-- [Moralis Forum](https://forum.moralis.io/)
-- [Moralis Discord](https://discord.com/channels/819584798443569182)
-- [Moralis GitHub](https://github.com/MoralisWeb3)
-- [Moralis YouTube](https://www.youtube.com/channel/UCgWS9Q3P5AxCWyQLT2kQhBw)
-
----
 =======
