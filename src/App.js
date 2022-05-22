@@ -8,8 +8,14 @@ function App() {
     <Center>
     <Box w={450}>
       <Center>
-      <Heading m={4} as="h1" size="2xl" isTruncated>🐋🚨</Heading>
+      <Heading m={4} as="h1" size="2xl" isTruncated>Polyflip Alerts
+      </Heading>
+      <br/>
       </Center>
+      <Center><video width="160" height="120" className="video" autoPlay muted Center>
+        <source src='https://polyflip.io/wp-content/uploads/2022/02/Polyflip_10001-0090.mp4' type="video/mp4"/></video>
+      </Center>
+      <br/>
       <Stack spacing={3}>
         <Box>
         {
