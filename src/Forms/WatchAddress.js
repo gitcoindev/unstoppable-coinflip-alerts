@@ -10,8 +10,6 @@ import {
   ButtonGroup,
   FormLabel,
   Select,
-  Checkbox,
-  HStack,
   Textarea,
   InputGroup,
   InputLeftElement,
@@ -36,8 +34,9 @@ export const WatchAddress = () => {
   // handle form submission
   const onSubmit = async (values) => {
     await sleep(300);
-    // capture address
-    let address = values.address;
+    // capture bot id and chat id
+    let telegram_bot_id = values.telegram_bot_id;
+    let chat_id = values.chat_id;
     // capture other params
     let alert_method = values.alert_method;
     let conditions = values.conditions;
@@ -46,22 +45,23 @@ export const WatchAddress = () => {
 
     // format input
     const params = {
-      address: address.toLowerCase(),
+      telegram_bot_id: telegram_bot_id,
+      chat_id: chat_id,
       alert_method: alert_method,
       conditions: conditions,
       threshold: threshold,
       notes: notes,
     };
     // run cloud function to watch, sync and alert
-    const watch = await Moralis.Cloud.run("watchAddress", params);
+    const watch = await Moralis.Cloud.run("watchPolyflip", params, {useMasterKey:true});
     // user feedback
     if (watch) {
       window.alert(
-        JSON.stringify(address + " added to watch list. 🐋👀", 0, 2)
+        JSON.stringify(telegram_bot_id + " added to watch list. 🐋👀", 0, 2)
       );
     } else {
       window.alert(
-        JSON.stringify("🚫 You're already watching this address. 🚫", 0, 2)
+        JSON.stringify("🚫 You're already using this bot. 🚫", 0, 2)
       );
     }
   };
@@ -79,35 +79,31 @@ export const WatchAddress = () => {
           boxShadow="1px 1px 3px rgba(0,0,0,0.3)"
           onSubmit={handleSubmit}
         >
-          <FormLabel htmlFor="address">Wallet Address</FormLabel>
+          <FormLabel htmlFor="telegram_bot_id">Telegram Bot ID</FormLabel>
 
           {
             // input field
           }
           <InputControl
-            name="address"
-            label="Enter Address"
+            name="telegram_bot_id"
+            label="Enter Bot ID"
             colorScheme="green"
           />
           {
             // checkbox
           }
-          <Control mb={4} colorScheme="green" name="alert_method" my={4}>
-            <FormLabel htmlFor="alert_method">Alert Method</FormLabel>
-            <HStack spacing={4}>
-              <CheckboxArrayControl name="alert_method" value="telegram">
-                Telegram
-              </CheckboxArrayControl>
-              <CheckboxArrayControl name="alert_method" value="twitter">
-                Twitter
-              </CheckboxArrayControl>
-              <CheckboxArrayControl name="alert_method" value="email">
-                Email
-              </CheckboxArrayControl>
-            </HStack>
-            <Error name="alert_method" />
-          </Control>
-
+          <FormLabel htmlFor="chat_id">Chat ID</FormLabel>
+          {
+            // input field
+          }
+          <InputControl
+            name="chat_id"
+            label="Enter Chat ID"
+            colorScheme="green"
+          />
+          {
+            // checkbox
+          }
           <Control mb={4} colorScheme="green" name="conditions" my={4}>
             <FormLabel htmlFor="conditions">Conditions</FormLabel>
 
@@ -144,7 +140,7 @@ export const WatchAddress = () => {
           <TextareaControl
             name="notes"
             label="Notes"
-            placeholder="e.g. Coinbase ETH Whale"
+            placeholder="e.g. Flipcoin player"
           />
           <ButtonGroup spacing={4}>
             {
@@ -229,21 +225,6 @@ const InputControlLeftIcon = ({ name, label, type }) => {
         <Error name={name} />
       </InputGroup>
     </Control>
-  );
-};
-
-const CheckboxArrayControl = ({ name, value, children }) => {
-  const {
-    input: { checked, ...input },
-    meta: { error, touched },
-  } = useField(name, {
-    type: "checkbox", // important for RFF to manage the checked prop
-    value, // important for RFF to manage list of strings
-  });
-  return (
-    <Checkbox {...input} isChecked={checked} isInvalid={error && touched}>
-      {children}
-    </Checkbox>
   );
 };
 
