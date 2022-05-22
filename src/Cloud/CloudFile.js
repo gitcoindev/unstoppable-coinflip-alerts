@@ -4,7 +4,7 @@ const sendTelegramAlert = async (from, value, hash) => {
   const chat_id = "-1001612713352"; // <-- ENTER TELEGRAM CHAT ID
 
   // alert message
-  let message = "Wallet " + from + " coinflipped " + value + "MATIC. https://polygonscan.io/tx/" + hash;
+  let message = "Wallet " + from + " coinflipped " + value + " MATIC. https://polygonscan.com/tx/" + hash;
 
   // Moralis httpRequest to Telegram API
   Moralis.Cloud.httpRequest({
@@ -93,7 +93,9 @@ Moralis.Cloud.define("watchPolyflip", async (request) => {
       logger.info(JSON.stringify(value_decimal.value));
       logger.info("------ Value Rendered ------");
 
-      await sendTelegramAlert(from_address, value_decimal.value, request.object.hash);
+      if (Number(value_decimal.value) >= Number(threshold)) {
+        await sendTelegramAlert(from_address, value_decimal.value, request.object.get("hash"));
+      }
     });
 
     return true;
