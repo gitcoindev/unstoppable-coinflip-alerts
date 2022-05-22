@@ -1,7 +1,7 @@
 const sendTelegramAlert = async (from, value, hash) => {
   // Telegram creds
-  const telegram_bot_id = "5326431883:AAH8w7IfDl5tWLfgNarSS9laRaFM8XUqp44"; // <-- ENTER TELEGRAM BOT ID
-  const chat_id = "-1001612713352"; // <-- ENTER TELEGRAM CHAT ID
+  const telegram_bot_id = ""; // <-- ENTER TELEGRAM BOT ID
+  const chat_id = ""; // <-- ENTER TELEGRAM CHAT ID
 
   // alert message
   let message = "Wallet " + from + " coinflipped " + value + " MATIC. https://polygonscan.com/tx/" + hash;
